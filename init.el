@@ -177,8 +177,6 @@
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
   ;; or for treemacs users
   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   (doom-themes-treemacs-config)
@@ -486,6 +484,38 @@
    ;;;; 5. No project support
   ;; (setq consult-project-function nil)
   )
+
+(use-package dashboard
+  :ensure t
+  :custom
+  (dashboard-startup-banner 'logo)
+  (dashboard-center-content t)
+  (dashboard-show-shortcuts nil)
+  (dashboard-set-heading-icons t)
+  (dashboard-icon-type 'nerd-icons)
+  (dashboard-set-file-icons t)
+  (dashboard-projects-backend 'projectile)
+  (dashboard-items '(
+                     (recents . 5)
+										 (projects . 5)
+                     (bookmarks . 5)
+                     ))
+  :config
+  (dashboard-setup-startup-hook))
+
+(use-package keycast
+  :ensure t
+  :defer
+  :custom
+  (keycast-mode-line-format "%k%c%R ")
+  (keycast-substitute-alist
+   '((keycast-log-erase-buffer nil nil)
+     (transient-update         nil nil)
+     (self-insert-command "." "Typing…")
+     (org-self-insert-command "." "Typing…")
+     (mwheel-scroll nil nil)
+     (mouse-movement-p nil nil)
+     (mouse-event-p nil nil))))
 
 (use-package treemacs
   :ensure t
